@@ -1,10 +1,14 @@
 import React from 'react'
+import WebLayout from '@/layouts/web-layout';
+
 
 const Index = () => {
   return (
-    <div>
-      Hellooo About US
-    </div>
+    <WebLayout>
+      <div>
+        Hellooo About US
+      </div>
+    </WebLayout>
   )
 }
 
