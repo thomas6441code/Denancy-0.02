@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\contact\ContactusController;
 
 Route::get('/', function () {
     return Inertia::render('web/home');
@@ -22,6 +23,8 @@ Route::get('/services', function () {
 Route::get('/contactus', function () {
     return Inertia::render('web/contactus/Index');
 })->name('contactus');
+
+Route::post('/api/contactus', [ContactusController::class, 'submit'])->name('contactus.submit');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {

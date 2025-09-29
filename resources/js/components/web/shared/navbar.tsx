@@ -16,7 +16,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header className="w-full overflow-x-hidden bg-amber-400 fixed top-0 left-0 z-50">
+    <header className={`w-full overflow-x-hidden ${isScrolled ? 'bg-amber-400 transition-all duration-1000':'bg-none transition-all duration-800'}  fixed top-0 left-0 z-50`}>
       {/* Top bar with parallelogram - Hidden on mobile */}
       <div className="hidden lg:flex justify-center text-sm text-gray-700 relative">
         <div className="bg-gray-200 w-11/12 max-w-7xl py-3 pt-2 px-6 transform -skew-x-12 flex items-center justify-between border-b border-gray-200">
@@ -51,7 +51,7 @@ export default function Navbar() {
       </div>
 
       {/* Mobile Top Bar */}
-      <div className="lg:hidden bg-gray-200 text-sm text-gray-700 py-2 px-4 w-full">
+      <div className="lg:hidden bg-gray-200 text-sm text-gray-700 py-2 px-4 w-full z-50">
         <div className="flex items-center justify-between max-w-7xl mx-auto">
           <div className="flex items-center space-x-3 px-2">
             <Link href="tel:+255 658 209 911" className="flex items-center text-blue-900 font-semibold text-xs sm:text-sm transition-colors duration-300">
@@ -68,7 +68,7 @@ export default function Navbar() {
       </div>
 
       {/* Sticky Wrapper */}
-      <div className={`sticky top-0 z-50 transition-all duration-500 ${isScrolled ? 'shadow-sm' : ''}`}>
+      <div className={`sticky top-0 z-50 transition-all duration-500 ${isScrolled ? '' : ''}`}>
         {/* Main navbar with parallelogram */}
         <nav className="flex justify-center mt-[-4px] lg:mt-[-8px] w-full">
           <div className={`
