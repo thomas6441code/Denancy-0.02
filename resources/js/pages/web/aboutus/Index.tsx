@@ -5,9 +5,11 @@ import WebLayout from '@/layouts/web-layout';
 const Index = () => {
   return (
     <WebLayout>
-      <div>
-        Hellooo About US
-      </div>
+
+       <div className="relative min-h-screen flex h-20 flex-col items-center justify-center py-6 sm:py-12">
+            Hello About Us Page...
+        </div>
+
     </WebLayout>
   )
 }

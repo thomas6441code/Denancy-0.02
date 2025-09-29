@@ -9,7 +9,7 @@ export default function Welcome() {
     return (
         <WebLayout>
 
-            <div className="relative flex min-h-screen flex-col items-center justify-center bg-gray-100 py-6 sm:py-12">
+            <div className="relative min-h-screen text-gray-900 flex h-20 flex-col items-center justify-center py-6 sm:py-12">
                 Hello Home Page...
             </div>
 
