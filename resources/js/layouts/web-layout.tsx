@@ -14,7 +14,7 @@ export default function WebLayout({ children, topSectionProps }: Readonly<WebLay
         <Navbar />
         {/* Top Section with configurable props */}
         <TopSection {...topSectionProps} />
-        <main className="flex-grow md:w-[81%] w-[95%] mx-auto z-40">
+        <main className="flex-grow z-40">
             {children}
         </main>
         <Footer />
