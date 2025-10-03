@@ -115,8 +115,8 @@ const ServicesSection = () => {
                             <div className={`flex flex-col lg:flex-row ${
                                 index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
                             } min-h-[500px] lg:min-h-[600px]`}>
-                                {/* Image Section - Full height */}
-                                <div className="lg:w-2/5 relative overflow-hidden">
+                                {/* Image Section - Always visible on all devices */}
+                                <div className="w-full lg:w-2/5 relative overflow-hidden">
                                     <div className="absolute inset-0 bg-gray-200">
                                         {service.image ? (
                                             <img
@@ -124,7 +124,6 @@ const ServicesSection = () => {
                                                 alt={service.title}
                                                 className="w-full h-full object-cover transition-all duration-700 hover:scale-110"
                                                 onError={(e) => {
-                                                    //e.target.style.display = 'none';
                                                     const fallback = e.target.parentElement.querySelector('.image-fallback');
                                                     if (fallback) fallback.style.display = 'flex';
                                                 }}
@@ -146,7 +145,7 @@ const ServicesSection = () => {
                                 </div>
 
                                 {/* Content Section */}
-                                <div className="lg:w-3/5 p-8 lg:p-12 flex flex-col justify-center">
+                                <div className="w-full lg:w-3/5 p-8 lg:p-12 flex flex-col justify-center">
                                     <div className="flex items-center gap-4 mb-6">
                                         <div className="w-14 h-14 bg-blue-600 text-white flex items-center justify-center rounded-xs transform transition-transform duration-300 hover:scale-110 hover:rotate-12">
                                             {service.icon}
@@ -197,7 +196,7 @@ const ServicesSection = () => {
                         <p className="text-blue-100 text-lg mb-6 max-w-2xl mx-auto">
                             Let's discuss how our comprehensive services can drive your success forward.
                         </p>
-                        <button className="bg-white text-blue-600 hover:bg-gray-100 font-bold py-4 px-8 rounded-xs transition-all duration-300 hover:scale-110 hover:shadow-2xl">
+                        <button onClick={()=> window.location.href = "/contactus"} className="bg-white text-blue-600 hover:bg-gray-100 font-bold py-4 px-8 rounded-xs transition-all duration-300 hover:scale-110 hover:shadow-2xl">
                             Start Your Journey Today
                         </button>
                     </div>

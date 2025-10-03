@@ -1,15 +1,15 @@
 import React from 'react'
 import WebLayout from '@/layouts/web-layout';
 import ServicesSection from '@/components/web/services/servicesSection';
+import { TopSectionProps } from '@/components/web/shared/topSection';
 
-const Index = () => {
+const Index = ({services, images}) => {
 
-    const topSectionProps = {
-        title: "Our Services",
-        description: "Discover the comprehensive range of services we offer to help your business grow.",
+    const topSectionProps:TopSectionProps = {
         images: [{
-        url: '/images/services/truck-mine.png',
-        title: 'Services Background'
+            url: '/images/services/truck-mine.png',
+            title: 'Services we Offer',
+            description: 'Denancy Legends Group offers a comprehensive range of services designed to meet the diverse needs of businesses and organizations. Our expertise spans multiple industries, allowing us to provide tailored solutions that drive growth and efficiency.'
         }],
         primaryButtonColor: "blue",
         bannerTitle: "Ready to Get Started with our services?",

@@ -13,7 +13,7 @@ import {
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
+import { AlbumIcon, BookOpen, CalendarPlus2Icon, Folder, LayoutGrid, MessageCircle, QuoteIcon, ServerOffIcon, UserCheckIcon, WavesLadder } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const mainNavItems: NavItem[] = [
@@ -22,12 +22,47 @@ const mainNavItems: NavItem[] = [
         href: dashboard(),
         icon: LayoutGrid,
     },
+    {
+        title: 'Services',
+        href: '/admin/services',
+        icon: ServerOffIcon,
+    },
+    {
+        title: 'Members',
+        href: '/admin/teams',
+        icon: UserCheckIcon,
+    },
+    {
+        title: 'Testimonials',
+        href: '/admin/testimonials',
+        icon: CalendarPlus2Icon,
+    },
+    {
+        title: 'Faqs',
+        href: '/admin/faqs',
+        icon: QuoteIcon,
+    },
+    {
+        title: 'Stats',
+        href: '/admin/stats',
+        icon: WavesLadder,
+    },
+    {
+        title: 'Slides',
+        href: '/admin/slides',
+        icon: AlbumIcon,
+    },
+    {
+        title: 'Messages',
+        href: '/admin/contacts',
+        icon: MessageCircle,
+    },
 ];
 
 const footerNavItems: NavItem[] = [
     {
         title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
+        href: 'https://github.com/thomas6441code/Denancy-0.02',
         icon: Folder,
     },
     {

@@ -6,26 +6,26 @@ const StatisticsSection = () => {
 
     const stats = [
         {
-            number: 25,
-            suffix: '+',
+            value: 25,
+            icon: '+',
             label: 'Partner Institutions',
             description: 'Trusted by organizations worldwide'
         },
         {
-            number: 150,
-            suffix: '+',
+            value: 150,
+            icon: '+',
             label: 'Projects Completed',
             description: 'Successful implementations'
         },
         {
-            number: 98,
-            suffix: '%',
+            value: 98,
+            icon: '%',
             label: 'Client Satisfaction',
             description: 'Happy customers served'
         },
         {
-            number: 5,
-            suffix: '+',
+            value: 5,
+            icon: '+',
             label: 'Years Experience',
             description: 'Industry expertise'
         }
@@ -74,8 +74,8 @@ const StatisticsSection = () => {
                         <div key={index} className="text-center">
                             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xs border border-white/20 hover:bg-white/15 transition-all duration-300">
                                 <AnimatedCounter
-                                    value={stat.number}
-                                    suffix={stat.suffix}
+                                    value={stat.value}
+                                    icon={stat.icon}
                                     isVisible={isVisible}
                                     duration={2000}
                                     delay={index * 300}
@@ -94,7 +94,7 @@ const StatisticsSection = () => {
                 {/* Bottom Text */}
                 <div className="text-center mt-12">
                     <p className="text-blue-200 font-serif italic text-lg">
-                        Join the growing number of satisfied clients who trust Denancy Legends Group.
+                        Join the growing value of satisfied clients who trust Denancy Legends Group.
                     </p>
                 </div>
             </div>
@@ -103,7 +103,7 @@ const StatisticsSection = () => {
 };
 
 // Animated Counter Component
-const AnimatedCounter = ({ value = 0, suffix = '', isVisible = true, duration = 2000, delay = 0 }) => {
+const AnimatedCounter = ({ value = 0, icon = '', isVisible = true, duration = 2000, delay = 0 }) => {
     const [count, setCount] = useState(0);
     const [hasAnimated, setHasAnimated] = useState(false);
 
@@ -133,7 +133,7 @@ const AnimatedCounter = ({ value = 0, suffix = '', isVisible = true, duration = 
     return (
         <div className="text-3xl md:text-4xl font-bold text-white">
             {count}
-            <span className="text-amber-400">{suffix}</span>
+            <span className="text-amber-400">{icon}</span>
         </div>
     );
 };
