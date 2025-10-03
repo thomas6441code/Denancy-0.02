@@ -3,7 +3,7 @@ import { PencilIcon, PlusIcon, TrashIcon } from 'lucide-react';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from '@/types';
 
-interface Stats {
+export interface Stats {
     id: number;
     icon: string;
     label: string;

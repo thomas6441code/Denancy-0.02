@@ -25,7 +25,7 @@ class SlideController extends Controller
             ]);
         } catch (\Exception $e) {
             return Inertia::render('admin/slides/SlidesAdmin', [
-                'slides' => [],
+                'slide' => [],
                 'error' => 'Failed to load slides: ' . $e->getMessage(),
             ]);
         }
@@ -84,6 +84,9 @@ class SlideController extends Controller
      */
     public function update(Request $request, Slide $slide): JsonResponse
     {
+        // REMOVE THE dd() STATEMENT - it stops execution
+        // dd($slide);
+
         $validator = Validator::make($request->all(), [
             'url' => 'sometimes|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'title' => 'sometimes|required|string|max:255',
@@ -99,25 +102,23 @@ class SlideController extends Controller
         }
 
         try {
-
-            $updateData = $request->only(['title', 'description']);
+            $updateData = [
+                'title' => $request->title,
+                'description' => $request->description,
+            ];
 
             // Handle file upload if new image is provided
             if ($request->hasFile('url')) {
                 // Delete old image if exists
-                if ($slide->url) {
-                    $oldImagePath = str_replace('/public/', '', $slide->url);
-                    if (Storage::disk('public')->exists($oldImagePath)) {
-                        Storage::disk('public')->delete($oldImagePath);
-                    }
+                if ($slide->url && file_exists(public_path($slide->url))) {
+                    unlink(public_path($slide->url));
                 }
 
                 // Upload new image
                 $file = $request->file('url');
                 $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $filePath = $file->storeAs('images/slides', $fileName, 'public');
-
-                $updateData['url'] = $filePath;
+                $file->move(public_path('images/slides'), $fileName);
+                $updateData['url'] = '/images/slides/' . $fileName;
             }
 
             $slide->update($updateData);
@@ -142,7 +143,6 @@ class SlideController extends Controller
     public function destroy(Slide $slide): JsonResponse
     {
         try {
-
             if (!$slide) {
                 return response()->json([
                     'success' => false,
@@ -151,11 +151,8 @@ class SlideController extends Controller
             }
 
             // Delete associated image file
-            if ($slide->url) {
-                $imagePath = str_replace('/public/', '', $slide->url);
-                if (Storage::disk('public')->exists($imagePath)) {
-                    Storage::disk('public')->delete($imagePath);
-                }
+            if ($slide->url && file_exists(public_path($slide->url))) {
+                unlink(public_path($slide->url));
             }
 
             $slide->delete();

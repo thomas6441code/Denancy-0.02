@@ -47,6 +47,8 @@ const TopSection = (
     }
     }, [images]);
 
+    console.log(images);
+
     const backgroundImage = images[currentIndex]?.url || '';
 
     return (
@@ -80,7 +82,11 @@ const TopSection = (
                     <div key={`title-${currentIndex}`} className="overflow-hidden">
                         <h1 className="text-3xl md:text-5xl font-bold leading-tight md:leading-snug max-w-4xl ml-0 md:ml-10 text-left
                                     text-white [text-shadow:_0_1px_3px_rgb(0_0_0_/_40%)]
-                                    animate-in slide-in-from-left-full duration-1000 ease-out">
+                                    animate-in slide-in-from-left-full duration-1000 ease-out
+                                    transition-all duration-300 ease-in-out
+                                    hover:bg-black/40 hover:backdrop-blur-sm hover:px-6 hover:py-3
+                                    hover:[text-shadow:_0_2px_6px_rgb(255_255_255_/_20%)]
+                                    cursor-pointer p-2">
                             {images[currentIndex]?.title || 'Background image'}
                         </h1>
                     </div>
@@ -89,7 +95,11 @@ const TopSection = (
                     <div key={`description-${currentIndex}`} className="overflow-hidden">
                         <p className="mt-4 text-sm md:text-lg max-w-3xl ml-0 md:ml-10 text-left
                                     text-gray-100 [text-shadow:_0_1px_2px_rgb(0_0_0_/_30%)] leading-relaxed
-                                    animate-in slide-in-from-left-full duration-900 ease-out delay-400">
+                                    animate-in slide-in-from-left-full duration-900 ease-out delay-400
+                                    transition-all duration-300 ease-in-out
+                                    hover:bg-black/50 hover:backdrop-blur-sm hover:px-4 hover:py-2
+                                    hover:text-white hover:[text-shadow:_0_1px_3px_rgb(255_255_255_/_10%)]
+                                    cursor-pointer p-2">
                             {images[currentIndex]?.description || 'Background image description'}
                         </p>
                     </div>

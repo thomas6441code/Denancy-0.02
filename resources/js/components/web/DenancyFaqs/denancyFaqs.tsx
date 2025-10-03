@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-interface Faqs {
+export interface Faqs {
     'id': number;
     'question': string;
     'answer': string;

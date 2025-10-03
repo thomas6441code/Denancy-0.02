@@ -5,7 +5,7 @@ import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/react';
 import ConfirmationModal from '@/components/web/shared/alertComfirm';
 
-interface Team {
+export interface Team {
     id: number;
     name: string;
     role: string;
@@ -414,8 +414,8 @@ const TeamsAdmin: FC = () => {
 
                 {/* Modal */}
                 {isModalOpen && (
-                    <div className="fixed inset-0 bg-black/50 backdrop-blur-md flex items-center justify-center p-4 z-50">
-                        <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+                    <div className="fixed hide-scrollbar inset-0 bg-black/30 backdrop-blur-md flex items-center justify-center p-4 z-50">
+                        <div className="bg-white rounded-3xl hide-scrollbar shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
                             {/* Modal Header */}
                             <div className="flex items-center justify-between p-8 border-b border-gray-100">
                                 <div>

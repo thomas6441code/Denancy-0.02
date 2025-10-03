@@ -3,12 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Service;
+use App\Models\Slide;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Inertia\Inertia;
 
 class ServiceController extends Controller
 {
+
+    public function index()
+    {
+        $slide = Slide::inRandomOrder()->first();
+        $services = Service::all();
+
+        return Inertia::render('web/services/Index', [
+            'images' => [$slide],
+            'services' => $services
+        ]);
+    }
+
     /**
      * Display a listing of the services for admin.
      */

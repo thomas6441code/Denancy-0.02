@@ -17,7 +17,7 @@ const DepartmentCreate: React.FC = () => {
             <Head title="Create New Stat" />
             <div className="container mx-auto px-4 py-8">
                 <h1 className="text-2xl font-bold text-gray-900 mb-8">Create New Stat</h1>
-                <div className="bg-white shadow rounded-lg p-6 max-w-lg">
+                <div className="bg-white shadow rounded-lg md:p-6 max-w-lg">
                     <StatForm />
                 </div>
             </div>

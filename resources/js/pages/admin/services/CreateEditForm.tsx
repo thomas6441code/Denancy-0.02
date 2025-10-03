@@ -46,8 +46,6 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ service, errors }) => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        console.log('Submitting form with data:', {...data, imageFile});
-
         if (service?.id) {
             post(`/admin/services/${service.id}`, {
                 data: { ...data, _method: 'PUT' },

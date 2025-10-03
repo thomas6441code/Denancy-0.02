@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import WebLayout from '@/layouts/web-layout'
+import { ImageItem } from '../home';
 interface ContactFormData {
   name: string;
   email: string;
@@ -8,7 +9,7 @@ interface ContactFormData {
   message: string;
 }
 
-const Index = () => {
+const Index = ({ images }:{images:ImageItem[]}) => {
   const [formData, setFormData] = useState<ContactFormData>({
     name: '',
     email: '',
@@ -72,12 +73,7 @@ const Index = () => {
   };
 
   const topSectionProps = {
-    title: "Contact Us",
-    description: "Get in touch with our team for any inquiries or support.",
-    images: [{
-    url: '/images/slides/contact.jpg',
-    title: 'Contact Us Background'
-    }],
+    images: images,
     primaryButtonColor: "blue",
     showBanner: "contact",
     bannerDescription: "Reach out to us for expert solutions and exceptional service.",
@@ -131,8 +127,8 @@ const Index = () => {
                             </div>
                             <div>
                             <h3 className="font-semibold text-gray-900 text-sm">Address</h3>
-                            <p className="text-gray-600 text-sm">123 Business District</p>
-                            <p className="text-gray-600 text-sm">Dar es Salaam</p>
+                            <p className="text-gray-600 text-sm">Nyamagana</p>
+                            <p className="text-gray-600 text-sm">Mwanza</p>
                             </div>
                         </div>
                     </div>

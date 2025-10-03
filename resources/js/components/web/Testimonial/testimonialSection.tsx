@@ -1,6 +1,6 @@
 import { MessageCircleCode } from "lucide-react";
 
-interface Testimonial {
+export interface Testimonial {
   id: number;
   name: string;
   role: string;

@@ -5,18 +5,15 @@ import IntroductionSection from '@/components/web/AboutUsComponents/heroSection'
 import WhyChooseUs from '@/components/web/AboutUsComponents/whyUSSection';
 import StatisticsSection from '@/components/web/AboutUsComponents/servicesSection';
 import MissionVisionPhilosophy from '@/components/web/AboutUsComponents/missionVisionSection';
+import { ImageItem } from '../home';
+import { Stats } from '@/pages/admin/stats/StatsAdmin';
+import { Team } from '@/pages/admin/teams/TeamsAdmin';
 
-const Index = () => {
+
+const Index = ({images, stats,members}:{images:ImageItem[], stats:Stats[], members:Team[]}) => {
 
     const topSectionProps = {
-        title: "About Us",
-        description: "Learn about our mission, vision, and the team behind our success.",
-        images: [{
-        url: '/images/services/logistics-02.jpg',
-            title: 'Denancy Legends Group',
-            description: 'Denancy Legends Group - Your trusted partner for innovative solutions and exceptional service delivery in Tanzania and beyond.'
-
-        }],
+        images: images,
         primaryButtonColor: "blue",
         primaryButtonHoverColor: "amber",
         secondaryButtonColor: "amber",
@@ -36,10 +33,10 @@ const Index = () => {
             <WhyChooseUs />
         </div>
 
-        <StatisticsSection />
+          <StatisticsSection stats={stats} />
 
         <div className="md:w-[81%] w-[95%] mx-auto min-h-screen text-gray-900 flex flex-col items-center justify-center">
-            <LeadershipSection />
+            <LeadershipSection members={members} />
         </div>
 
         {/* Bottom CTA */}

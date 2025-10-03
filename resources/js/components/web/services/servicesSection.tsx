@@ -1,55 +1,10 @@
+import { Service } from '@/pages/admin/services/Index';
 import { useState, useEffect, useRef } from 'react';
+import IconComponent from '../shared/IconComponent';
 
-const ServicesSection = () => {
+const ServicesSection = ({services}:{services:Service[]}) => {
     const [visibleServices, setVisibleServices] = useState([]);
     const sectionRef = useRef(null);
-
-    const services = [
-        {
-            title: "MINING SUPPORT & SERVICES",
-            description: "We specialize in providing comprehensive support to the mining industry. From exploration assistance to on-site logistical coordination, our team ensures operations run smoothly, safely, and efficiently, contributing to the success of your projects.",
-            icon: (
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                </svg>
-            ),
-            features: ["Exploration Assistance", "On-site Coordination", "Safety Management", "Operational Efficiency"],
-            image: "/images/services/truck-potrait.png"
-        },
-        {
-            title: "FINANCIAL CONSULTANCY",
-            description: "With expert financial advisors, we offer guidance on investment strategies, risk management, and financial planning. Our goal is to empower businesses and individuals with the tools and knowledge to achieve their financial objectives.",
-            icon: (
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-            ),
-            features: ["Investment Strategies", "Risk Management", "Financial Planning", "Wealth Building"],
-            image: "/images/services/financy.jpg"
-        },
-        {
-            title: "MANAGEMENT STRATEGIES",
-            description: "We help organizations optimize their operations through strategic planning, process improvement, and leadership development. Our tailored solutions enable businesses to adapt to changing markets and drive sustainable growth.",
-            icon: (
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-            ),
-            features: ["Strategic Planning", "Process Improvement", "Leadership Development", "Market Adaptation"],
-            image: "/images/services/strategy.jpg"
-        },
-        {
-            title: "LOGISTIC MANAGEMENT",
-            description: "Whether you need reliable transportation solutions or end-to-end logistics management, we deliver services designed to keep you on the move. Our fleet is modern, well-maintained, and supported by a team of logistics professionals.",
-            icon: (
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-            ),
-            features: ["Transportation Solutions", "End-to-End Logistics", "Modern Fleet", "Professional Team"],
-            image: "/images/services/logistics.jpg"
-        }
-    ];
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -84,7 +39,7 @@ const ServicesSection = () => {
     }, []);
 
     return (
-        <section ref={sectionRef} className="py-5 md:px-4">
+        <section ref={sectionRef} className="py-5">
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
                 <div className="text-center mb-16">
@@ -96,7 +51,7 @@ const ServicesSection = () => {
 
                 {/* Services - Full width with alternating layout */}
                 <div className="space-y-8">
-                    {services.map((service, index) => (
+                    {services?.map((service, index) => (
                         <div
                             key={index}
                             data-index={index}
@@ -132,7 +87,7 @@ const ServicesSection = () => {
                                         <div className="image-fallback absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center hidden">
                                             <div className="text-white text-center p-8">
                                                 <div className="w-20 h-20 bg-white/20 rounded-xs flex items-center justify-center mx-auto mb-4">
-                                                    {service.icon}
+                                                    <IconComponent icon={service.icon}/>
                                                 </div>
                                                 <p className="text-xl font-medium">{service.title.split('&')[0]}</p>
                                                 <p className="text-white/80 mt-2">Service Image</p>
@@ -148,7 +103,7 @@ const ServicesSection = () => {
                                 <div className="w-full lg:w-3/5 p-8 lg:p-12 flex flex-col justify-center">
                                     <div className="flex items-center gap-4 mb-6">
                                         <div className="w-14 h-14 bg-blue-600 text-white flex items-center justify-center rounded-xs transform transition-transform duration-300 hover:scale-110 hover:rotate-12">
-                                            {service.icon}
+                                            <IconComponent icon={service.icon} />
                                         </div>
                                         <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 transform transition-transform duration-300 hover:translate-x-2">
                                             {service.title}

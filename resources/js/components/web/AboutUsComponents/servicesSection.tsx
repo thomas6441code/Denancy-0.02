@@ -1,35 +1,17 @@
 import { useState, useEffect, useRef } from 'react';
+import IconComponent from '../shared/IconComponent';
 
-const StatisticsSection = () => {
+export interface Stats {
+    id: number;
+    icon: string;
+    label: string;
+    value: string;
+    description: string;
+}
+
+const StatisticsSection = ({stats}:{stats:Stats[]}) => {
     const [isVisible, setIsVisible] = useState(false);
     const sectionRef = useRef(null);
-
-    const stats = [
-        {
-            value: 25,
-            icon: '+',
-            label: 'Partner Institutions',
-            description: 'Trusted by organizations worldwide'
-        },
-        {
-            value: 150,
-            icon: '+',
-            label: 'Projects Completed',
-            description: 'Successful implementations'
-        },
-        {
-            value: 98,
-            icon: '%',
-            label: 'Client Satisfaction',
-            description: 'Happy customers served'
-        },
-        {
-            value: 5,
-            icon: '+',
-            label: 'Years Experience',
-            description: 'Industry expertise'
-        }
-    ];
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -70,17 +52,21 @@ const StatisticsSection = () => {
 
                 {/* Statistics Grid */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-                    {stats.map((stat, index) => (
-                        <div key={index} className="text-center">
+                    {stats.map((stat) => (
+                        <div key={stat.id} className="text-center">
                             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-xs border border-white/20 hover:bg-white/15 transition-all duration-300">
                                 <AnimatedCounter
                                     value={stat.value}
-                                    icon={stat.icon}
                                     isVisible={isVisible}
-                                    duration={2000}
-                                    delay={index * 300}
+                                    duration={2500}
+                                    delay={stat.id * 300}
                                 />
-                                <h3 className="text-white font-bold text-lg mb-2 mt-4">
+
+                                <div className="my-4">
+                                    <IconComponent className='text-3xl md:text-4xl text-white' icon={stat.icon} />
+                                </div>
+
+                                <h3 className="text-white font-bold text-lg mb-2">
                                     {stat.label}
                                 </h3>
                                 <p className="text-blue-200 text-sm">
@@ -102,22 +88,44 @@ const StatisticsSection = () => {
     );
 };
 
+// Helper function to parse value and extract numeric part and suffix
+const parseValue = (value: string): { numericValue: number; suffix: string } => {
+    // Remove any whitespace and convert to string
+    const stringValue = String(value).trim();
+
+    // Extract numeric part (digits and decimal points)
+    const numericMatch = stringValue.match(/^(\d+(?:\.\d+)?)/);
+    const numericValue = numericMatch ? parseFloat(numericMatch[1]) : 0;
+
+    // Extract suffix (everything after the numeric part)
+    const suffix = stringValue.replace(/^(\d+(?:\.\d+)?)/, '').trim();
+
+    return { numericValue, suffix };
+};
+
 // Animated Counter Component
-const AnimatedCounter = ({ value = 0, icon = '', isVisible = true, duration = 2000, delay = 0 }) => {
+const AnimatedCounter = ({ value = "0", isVisible = true, duration = 2000, delay = 0 }) => {
     const [count, setCount] = useState(0);
     const [hasAnimated, setHasAnimated] = useState(false);
 
+    // Parse the value to get numeric part and suffix
+    const { numericValue, suffix } = parseValue(value);
+
     useEffect(() => {
-        if (isVisible && !hasAnimated) {
+        if (isVisible && !hasAnimated && numericValue > 0) {
             const timer = setTimeout(() => {
                 setHasAnimated(true);
+
                 let start = 0;
-                const end = value;
-                const incrementTime = duration / end;
+                const end = numericValue;
+
+                // Calculate increment time based on duration and target value
+                const incrementTime = Math.max(1, duration / end);
 
                 const timerId = setInterval(() => {
                     start += 1;
-                    setCount(start);
+                    setCount(Math.min(start, end));
+
                     if (start >= end) {
                         clearInterval(timerId);
                     }
@@ -128,12 +136,20 @@ const AnimatedCounter = ({ value = 0, icon = '', isVisible = true, duration = 20
 
             return () => clearTimeout(timer);
         }
-    }, [isVisible, value, duration, delay, hasAnimated]);
+    }, [isVisible, numericValue, duration, delay, hasAnimated]);
+
+    // If value is 0 or not a valid number, just display the original value
+    if (numericValue === 0 || !isVisible || !hasAnimated) {
+        return (
+            <div className="text-3xl md:text-4xl font-bold text-white">
+                {value}
+            </div>
+        );
+    }
 
     return (
         <div className="text-3xl md:text-4xl font-bold text-white">
-            {count}
-            <span className="text-amber-400">{icon}</span>
+            {count}{suffix}
         </div>
     );
 };

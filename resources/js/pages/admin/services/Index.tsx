@@ -7,7 +7,7 @@ import { Button } from '@headlessui/react';
 import ServiceDetailModal from './ServiceDetailsModel';
 import IconComponent from '@/components/web/shared/IconComponent';
 
-interface Service {
+export interface Service {
     id?: number;
     title: string;
     image: string;
@@ -91,7 +91,7 @@ export default function ServicesIndex({ services }: Readonly<Props>) {
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
 
                                     {/* Action buttons overlay */}
-                                    <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <div className="absolute top-3 right-3 flex gap-2 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                         <Link
                                             href={`/admin/services/edit/${service.id}`}
                                             className="p-2 bg-white/90 hover:bg-white text-gray-700 rounded-lg shadow-sm transition-colors"

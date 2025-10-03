@@ -5,6 +5,7 @@ namespace App\Http\Controllers\contact;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Slide;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
@@ -14,7 +15,10 @@ class ContactusController extends Controller
 {
     public function index()
     {
-        return Inertia::render('web.contactus.Index');
+        $slide = Slide::inRandomOrder()->first();
+        return Inertia::render('web/contactus/Index', [
+            'images' => [$slide],
+        ]);
     }
 
     public function adminIndex()

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutUSController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FaqController;
@@ -9,8 +10,8 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\contact\ContactusController;
-
-
+use App\Http\Controllers\DashBoardController;
+use App\Http\Controllers\HomeController;
 
 /*|--------------------------------------------------------------------------
 | Web Routes
@@ -21,28 +22,17 @@ use App\Http\Controllers\contact\ContactusController;
 |--------------------------------------------------------------------------*/
 
 
-Route::get('/', function () {
-    return Inertia::render('web/home');
-})->name('home');
-
-
 /* Clients routes  */
-Route::get('/home', function () {
-    return Inertia::render('web/home');
-})->name('homeextra');
 
-Route::get('/aboutus', function () {
-    return Inertia::render('web/aboutus/Index');
-})->name('aboutus');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('homeextra');
 
-Route::get('/services', function () {
-    return Inertia::render('web/services/Index');
-})->name('services');
 
-Route::get('/contactus', function () {
-    return Inertia::render('web/contactus/Index');
-})->name('contactus');
+Route::get('/aboutus', [AboutUSController::class, 'index'])->name('aboutus');
 
+Route::get('/services', [ServiceController::class, 'index'])->name('services');
+
+Route::get('/contactus', [ContactusController::class, 'index'])->name('contactus');
 Route::post('/api/contactus', [ContactusController::class, 'submit'])->name('contactus.submit');
 
 
@@ -50,10 +40,9 @@ Route::post('/api/contactus', [ContactusController::class, 'submit'])->name('con
 Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
 
     Route::get('/slides', [SlideController::class, 'index'])->name('slides');
-
-    Route::post('/slides', [SlideController::class, 'store'])->name('store.slides');
-
-    Route::get('/contacts', [ContactusController::class, 'adminIndex'])->name('contacts');
+    Route::post('/slides', [SlideController::class, 'store'])->name('admin.slides.store');
+    Route::match(['put', 'post'], '/slides/{slide}', [SlideController::class, 'update'])->name('admin.slides.update');
+    Route::delete('/slides/{slide}', [SlideController::class, 'destroy'])->name('admin.slides.destroy');
 
     Route::get('/contacts', [ContactusController::class, 'adminIndex'])->name('contacts');
 
@@ -94,9 +83,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
 });
 
 Route::middleware(['verified', 'auth'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('admin/dashboard');
-    })->name('dashboard');
+    Route::get('dashboard', [DashBoardController::class, 'index'])->name('dashboard');
 
     Route::get('/api/admin/contacts', [ContactusController::class, 'getall'])->name('api.contacts');
     Route::put('/api/admin/contacts/read/{contact}', [ContactusController::class, 'markAsRead'])->name('api.read.contacts');

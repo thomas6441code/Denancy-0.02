@@ -37,7 +37,7 @@ const StatForm: React.FC<StatProps> = ({ stat }) => {
     };
 
     return (
-        <div className="max-w-2xl mx-auto p-6">
+        <div className="max-w-2xl mx-auto md:p-6">
             <form onSubmit={handleSubmit} className="space-y-6">
                 <Card className='bg-white border border-gray-200 shadow-sm'>
                     <CardHeader className='pb-4'>

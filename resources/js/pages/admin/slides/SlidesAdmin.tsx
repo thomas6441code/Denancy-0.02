@@ -1,4 +1,4 @@
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect } from 'react';
 import { Trash2, Edit, Image as ImageIcon, Loader2, Plus, X, CheckCircle2, XCircle } from 'lucide-react';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
@@ -51,9 +51,7 @@ const SlidesAdmin = ({ slide }: { slide: Slide[] }) => {
 
     useEffect(() => {
         setSlides(slide || []);
-        console.log('Slides:', slides);
-    }, []);
-
+    }, [slide]); // Added slide dependency
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -70,6 +68,11 @@ const SlidesAdmin = ({ slide }: { slide: Slide[] }) => {
         formData.append('description', description);
         if (url) formData.append('url', url);
 
+        // FIX 1: Only add _method for updates, not for creates
+        if (editingSlide) {
+            formData.append('_method', 'PUT');
+        }
+
         try {
             const endpoint = editingSlide
                 ? `/admin/slides/${editingSlide.id}`
@@ -77,12 +80,16 @@ const SlidesAdmin = ({ slide }: { slide: Slide[] }) => {
 
             const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
+            // FIX 2: Use proper method based on operation
+            const method = editingSlide ? 'POST' : 'POST'; // POST with _method for PUT
+
             const response = await fetch(endpoint, {
-                method: editingSlide ? 'PUT' : 'POST',
+                method: method,
                 headers: {
                     'X-CSRF-TOKEN': csrfToken || '',
                     'X-Requested-With': 'XMLHttpRequest',
                     'Accept': 'application/json'
+                    // Don't set Content-Type for FormData - let browser set it
                 },
                 body: formData,
                 credentials: 'include',
@@ -105,14 +112,14 @@ const SlidesAdmin = ({ slide }: { slide: Slide[] }) => {
                 throw new Error(data.message || `HTTP error! status: ${response.status}`);
             }
 
-            // Update slides list
-            if (slides && data) {
+            // FIX 3: Update slides list properly
+            if (data.success && data.data) {
                 if (editingSlide) {
                     setSlides(prev => prev.map(slide =>
-                        slide.id === editingSlide.id ? data : slide
+                        slide.id === editingSlide.id ? data.data : slide
                     ));
                 } else {
-                    setSlides(prev => [...prev, data]);
+                    setSlides(prev => [...prev, data.data]);
                 }
             }
 
@@ -120,7 +127,7 @@ const SlidesAdmin = ({ slide }: { slide: Slide[] }) => {
                 loading: false,
                 success: true,
                 error: null,
-                message: `Slide ${editingSlide ? 'updated' : 'created'} successfully!`,
+                message: data.message || `Slide ${editingSlide ? 'updated' : 'created'} successfully!`,
                 fieldErrors: {}
             });
 
@@ -146,7 +153,8 @@ const SlidesAdmin = ({ slide }: { slide: Slide[] }) => {
         setEditingSlide(slide);
         setTitle(slide.title);
         setDescription(slide.description);
-        setPreview(slide.url.startsWith('/') ? slide.url : `/${slide.url}`);
+        // FIX 4: Proper URL handling for preview
+        setPreview(slide.url.startsWith('http') ? slide.url : `${window.location.origin}${slide.url}`);
         setIsModalOpen(true);
     };
 
@@ -176,15 +184,16 @@ const SlidesAdmin = ({ slide }: { slide: Slide[] }) => {
                 throw new Error(data.message || `HTTP error! status: ${response.status}`);
             }
 
-            setSlides(prev => prev.filter(slide => slide.id !== id));
-
-            setSubmissionState({
-                loading: false,
-                success: true,
-                error: null,
-                message: 'Slide deleted successfully!',
-                fieldErrors: {}
-            });
+            if (data.success) {
+                setSlides(prev => prev.filter(slide => slide.id !== id));
+                setSubmissionState({
+                    loading: false,
+                    success: true,
+                    error: null,
+                    message: data.message || 'Slide deleted successfully!',
+                    fieldErrors: {}
+                });
+            }
 
         } catch (error) {
             setSubmissionState({
@@ -252,40 +261,11 @@ const SlidesAdmin = ({ slide }: { slide: Slide[] }) => {
                         </button>
                     </div>
 
-                    {/* Success/Error Messages */}
-                    {(submissionState.success || submissionState.error) && (
-                        <div className={`mb-6 p-4 rounded-lg ${
-                            submissionState.success ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'
-                        }`}>
-                            <div className="flex items-start">
-                                <div className="flex-shrink-0">
-                                    {submissionState.success ? (
-                                        <CheckCircle2 className="h-5 w-5 text-green-500" />
-                                    ) : (
-                                        <XCircle className="h-5 w-5 text-red-500" />
-                                    )}
-                                </div>
-                                <div className="ml-3">
-                                    <h3 className={`text-sm font-medium ${
-                                        submissionState.success ? 'text-green-800' : 'text-red-800'
-                                    }`}>
-                                        {submissionState.success ? 'Success!' : submissionState.error}
-                                    </h3>
-                                    <div className={`text-sm ${
-                                        submissionState.success ? 'text-green-700' : 'text-red-700'
-                                    }`}>
-                                        {submissionState.message}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-
                     {/* Slides List */}
                     <div className="bg-white rounded-lg shadow-md p-6">
                         <h2 className="text-xl font-semibold mb-6">Current Slides</h2>
 
-                        {slides?.length === 0 ? (
+                        {slides.length === 0 ? (
                             <div className="text-center py-12">
                                 <ImageIcon className="mx-auto h-12 w-12 text-gray-400" />
                                 <h3 className="mt-2 text-sm font-medium text-gray-900">No slides</h3>
@@ -302,16 +282,13 @@ const SlidesAdmin = ({ slide }: { slide: Slide[] }) => {
                             </div>
                         ) : (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {slides?.map((slide) => (
+                                {slides.map((slide) => (
                                     <div key={slide.id} className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200">
                                         <div className="relative h-48 bg-gray-100">
                                             <img
-                                                src={slide.url}
+                                                src={slide.url.startsWith('http') ? slide.url : `${window.location.origin}${slide.url}`}
                                                 alt={slide.title}
                                                 className="w-full h-full object-cover"
-                                                onError={(e) => {
-                                                    (e.target as HTMLImageElement).src = '/images/placeholder.jpg';
-                                                }}
                                             />
                                         </div>
                                         <div className="p-4">
@@ -344,7 +321,7 @@ const SlidesAdmin = ({ slide }: { slide: Slide[] }) => {
                 {/* Modal */}
                 {isModalOpen && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-                        <div className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+                        <div className="bg-white rounded-lg shadow-xl max-w-md w-full hide-scrollbar max-h-[90vh] overflow-y-auto">
                             {/* Modal Header */}
                             <div className="flex items-center justify-between p-6 border-b border-gray-200">
                                 <h2 className="text-xl font-semibold">
@@ -360,6 +337,35 @@ const SlidesAdmin = ({ slide }: { slide: Slide[] }) => {
 
                             {/* Modal Body */}
                             <div className="p-6">
+                                {/* Success/Error Messages */}
+                                {(submissionState.success || submissionState.error) && (
+                                    <div className={`mb-6 p-4 rounded-lg ${
+                                        submissionState.success ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'
+                                    }`}>
+                                        <div className="flex items-start">
+                                            <div className="flex-shrink-0">
+                                                {submissionState.success ? (
+                                                    <CheckCircle2 className="h-5 w-5 text-green-500" />
+                                                ) : (
+                                                    <XCircle className="h-5 w-5 text-red-500" />
+                                                )}
+                                            </div>
+                                            <div className="ml-3">
+                                                <h3 className={`text-sm font-medium ${
+                                                    submissionState.success ? 'text-green-800' : 'text-red-800'
+                                                }`}>
+                                                    {submissionState.success ? 'Success!' : submissionState.error}
+                                                </h3>
+                                                <div className={`text-sm ${
+                                                    submissionState.success ? 'text-green-700' : 'text-red-700'
+                                                }`}>
+                                                    {submissionState.message}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
                                 <form onSubmit={handleSubmit}>
                                     <div className="space-y-4">
                                         {/* Title Field */}
