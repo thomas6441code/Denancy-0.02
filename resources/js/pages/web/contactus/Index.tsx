@@ -35,7 +35,6 @@ const Index = ({ images }:{images:ImageItem[]}) => {
 
     const csrfToken = (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement)?.content;
 
-    console.log('Submitting form data:', csrfToken, formData);
     try {
       const response = await fetch('/api/contactus', {
         method: 'POST',
@@ -60,12 +59,10 @@ const Index = ({ images }:{images:ImageItem[]}) => {
           message: ''
         });
 
-        console.log('Form submitted successfully');
       } else {
         setSubmitStatus('error');
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);

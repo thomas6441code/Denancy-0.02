@@ -34,7 +34,7 @@ export default function ConfirmPassword() {
 
                         <div className="flex items-center">
                             <Button
-                                className="w-full"
+                                className="mt-4 bg-blue-600 border-2 hover:bg-blue-500 border-amber-200 w-full"
                                 disabled={processing}
                                 data-test="confirm-password-button"
                             >

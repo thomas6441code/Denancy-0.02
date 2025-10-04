@@ -29,7 +29,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
             >
                 {({ processing }) => (
                     <>
-                        <Button disabled={processing} variant="secondary">
+                        <Button disabled={processing} className='mt-4 bg-blue-600 border-2 hover:bg-blue-500 border-amber-200 w-full' variant="secondary">
                             {processing && (
                                 <LoaderCircle className="h-4 w-4 animate-spin" />
                             )}

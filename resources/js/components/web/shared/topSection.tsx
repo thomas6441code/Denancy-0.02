@@ -47,8 +47,6 @@ const TopSection = (
     }
     }, [images]);
 
-    console.log(images);
-
     const backgroundImage = images[currentIndex]?.url || '';
 
     return (

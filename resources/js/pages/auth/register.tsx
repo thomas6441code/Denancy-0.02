@@ -1,10 +1,7 @@
 import RegisteredUserController from '@/actions/App/Http/Controllers/Auth/RegisteredUserController';
-import { login } from '@/routes';
 import { Form, Head } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
-
 import InputError from '@/components/input-error';
-import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -24,7 +21,6 @@ export default function Register() {
                 className="flex flex-col gap-6"
             >
                 {({ processing, errors }) => (
-                    <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">
                                 <Label htmlFor="name">Name</Label>
@@ -92,7 +88,7 @@ export default function Register() {
 
                             <Button
                                 type="submit"
-                                className="mt-2 w-full"
+                                className="mt-4 bg-blue-600 border-2 hover:bg-blue-500 border-amber-200 w-full"
                                 tabIndex={5}
                                 data-test="register-user-button"
                             >
@@ -101,15 +97,7 @@ export default function Register() {
                                 )}
                                 Create account
                             </Button>
-                        </div>
-
-                        <div className="text-center text-sm text-muted-foreground">
-                            Already have an account?{' '}
-                            <TextLink href={login()} tabIndex={6}>
-                                Log in
-                            </TextLink>
-                        </div>
-                    </>
+                    </div>
                 )}
             </Form>
         </AuthLayout>

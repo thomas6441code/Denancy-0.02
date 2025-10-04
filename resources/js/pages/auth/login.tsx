@@ -6,7 +6,6 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout';
-import { register } from '@/routes';
 import { request } from '@/routes/password';
 import { Form, Head } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
@@ -30,7 +29,6 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                 className="flex flex-col gap-6"
             >
                 {({ processing, errors }) => (
-                    <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">
                                 <Label htmlFor="email">Email address</Label>
@@ -74,7 +72,8 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
                             <div className="flex items-center space-x-3">
                                 <Checkbox
-                                    id="remember"
+                                id="remember"
+                                className='border-blue-400'
                                     name="remember"
                                     tabIndex={3}
                                 />
@@ -83,7 +82,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
                             <Button
                                 type="submit"
-                                className="mt-4 w-full"
+                                className="mt-4 bg-blue-600 border-2 hover:bg-blue-500 border-amber-200 w-full"
                                 tabIndex={4}
                                 disabled={processing}
                                 data-test="login-button"
@@ -94,14 +93,6 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                                 Log in
                             </Button>
                         </div>
-
-                        <div className="text-center text-sm text-muted-foreground">
-                            Don't have an account?{' '}
-                            <TextLink href={register()} tabIndex={5}>
-                                Sign up
-                            </TextLink>
-                        </div>
-                    </>
                 )}
             </Form>
 

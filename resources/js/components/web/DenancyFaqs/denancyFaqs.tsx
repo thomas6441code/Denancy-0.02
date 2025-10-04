@@ -69,7 +69,7 @@ const DenancyHelp = ({ faqs, title }: { faqs: Faqs[], title: string }) => {
                                         {faq.question}
                                     </h3>
                                     <div className={`transition-all duration-300 overflow-hidden ${
-                                        activeIndex === index ? 'max-h-20 opacity-100 mt-2' : 'max-h-0 opacity-0'
+                                        activeIndex === index ? 'max-h-32 opacity-100 mt-2' : 'max-h-0 opacity-0'
                                     }`}>
                                         <p className="text-sm text-gray-600 leading-relaxed">
                                             {faq.answer}
