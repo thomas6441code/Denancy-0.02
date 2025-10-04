@@ -67,7 +67,7 @@ const TeamsAdmin: FC = () => {
 
     const fetchTeams = async () => {
         try {
-            const response = await fetch('/admin/team');
+            const response = await fetch('/admin/teams');
             if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.json();
             setTeams(data);

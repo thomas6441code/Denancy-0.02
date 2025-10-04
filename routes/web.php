@@ -61,7 +61,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::delete('/faqs/{faq}', [FaqController::class, 'destroy'])->name('admin.faqs.destroy');
 
     Route::get('/teams', [MemberController::class, 'index'])->name('admin.teams.teamsAdmin');
-    Route::get('/team', [MemberController::class, 'indexteams']);
+    Route::get('/teams', [MemberController::class, 'indexteams']);
     Route::post('/teams', [MemberController::class, 'store']);
     Route::put('/teams/{member}', [MemberController::class, 'update']);
     Route::delete('/teams/{member}', [MemberController::class, 'destroy']);

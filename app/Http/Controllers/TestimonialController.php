@@ -37,8 +37,11 @@ class TestimonialController extends Controller
         ]);
 
         if ($validator->fails()) {
-            // Return Inertia-compatible error response
-            return back()->withErrors($validator->errors())->withInput();
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
         }
 
         $validated = $validator->validated();
@@ -52,9 +55,13 @@ class TestimonialController extends Controller
         }
 
         // Create the testimonial
-        Testimonial::create($validated);
+        $testimonial = Testimonial::create($validated);
 
-        return redirect()->route('admin.testimonials.index')->with('success', 'Testimonial created successfully!');
+        return response()->json([
+            'success' => true,
+            'message' => 'Testimonial created successfully!',
+            'data' => $testimonial
+        ], 201);
     }
 
     // Show edit form
@@ -78,8 +85,11 @@ class TestimonialController extends Controller
         ]);
 
         if ($validator->fails()) {
-            // Return Inertia-compatible error response
-            return back()->withErrors($validator->errors())->withInput();
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
         }
 
         $validated = $validator->validated();
@@ -104,21 +114,37 @@ class TestimonialController extends Controller
         // Update the testimonial
         $testimonial->update($validated);
 
-        return redirect()->route('admin.testimonials.index')->with('success', 'Testimonial updated successfully!');
+        return response()->json([
+            'success' => true,
+            'message' => 'Testimonial updated successfully!',
+            'data' => $testimonial
+        ]);
     }
 
     // Delete testimonial
     public function destroy(Testimonial $testimonial)
     {
-        // Delete old image if exists
-        if ($testimonial && $testimonial->image) {
-            $oldImagePath = public_path($testimonial->image);
-            if (File::exists($oldImagePath)) {
-                File::delete($oldImagePath);
+        try {
+            // Delete old image if exists
+            if ($testimonial && $testimonial->image) {
+                $oldImagePath = public_path($testimonial->image);
+                if (File::exists($oldImagePath)) {
+                    File::delete($oldImagePath);
+                }
             }
-        }
 
-        $testimonial->delete();
-        return redirect()->route('admin.testimonials.index')->with('success', 'Testimonial deleted successfully!');
+            $testimonial->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Testimonial deleted successfully!'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete testimonial',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }
