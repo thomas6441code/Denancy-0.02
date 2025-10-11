@@ -8,9 +8,10 @@ import MissionVisionPhilosophy from '@/components/web/AboutUsComponents/missionV
 import { ImageItem } from '../home';
 import { Stats } from '@/pages/admin/stats/StatsAdmin';
 import { Team } from '@/pages/admin/teams/TeamsAdmin';
+import { Service } from '@/pages/admin/services/Index';
 
 
-const Index = ({images, stats,members}:{images:ImageItem[], stats:Stats[], members:Team[]}) => {
+const Index = ({images, image, stats,members}:{images:ImageItem[], image:Service, stats:Stats[], members:Team[]}) => {
 
     const topSectionProps = {
         images: images,
@@ -28,7 +29,7 @@ const Index = ({images, stats,members}:{images:ImageItem[], stats:Stats[], membe
     <WebLayout topSectionProps={topSectionProps}>
 
         <div className="md:w-[81%] w-[95%] px-3 mx-auto min-h-screen text-gray-900 flex flex-col items-center justify-center py-6">
-            <IntroductionSection />
+            <IntroductionSection image={image} />
             <MissionVisionPhilosophy />
             <WhyChooseUs />
         </div>

@@ -13,12 +13,13 @@ export interface ImageItem {
 
 interface HomeProps {
     images: ImageItem[];
+    image: ImageItem;
     faqs: Faqs[];
     testimonials: Testimonial[];
 }
 
 
-export default function Home({ images, faqs, testimonials }: Readonly<{ HomeProps:HomeProps[]}>) {
+export default function Home({ images, image, faqs, testimonials }: { HomeProps:HomeProps[]}) {
     const topSectionProps = {
         images: images,
         showBanner: "home"
@@ -27,7 +28,7 @@ export default function Home({ images, faqs, testimonials }: Readonly<{ HomeProp
     return (
         <WebLayout topSectionProps={topSectionProps}>
             <div className="md:mt-40 mt-[50vh] md:w-[81%] w-[95%] mx-auto min-h-screen md:py-10 px-5 md:px-0 text-gray-900 flex flex-col items-center justify-center py-6">
-                <AboutSection/>
+                <AboutSection image={image}/>
             </div>
 
             <DynamicElevateSection />

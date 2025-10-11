@@ -8,29 +8,25 @@ import { edit } from '@/routes/profile';
 import { show } from '@/routes/two-factor';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
+import { LockIcon, UserCheck2Icon, UserPlus2 } from 'lucide-react';
 import { type PropsWithChildren } from 'react';
 
 const sidebarNavItems: NavItem[] = [
     {
         title: 'Profile',
         href: edit(),
-        icon: null,
+        icon: UserCheck2Icon,
     },
     {
         title: 'Password',
         href: editPassword(),
-        icon: null,
+        icon: LockIcon,
     },
     {
-        title: 'Two-Factor Auth',
-        href: show(),
-        icon: null,
-    },
-    {
-        title: 'Appearance',
-        href: editAppearance(),
-        icon: null,
-    },
+        title: 'Add Account',
+        href: '/register',
+        icon: UserPlus2,
+    }
 ];
 
 export default function SettingsLayout({ children }: PropsWithChildren) {

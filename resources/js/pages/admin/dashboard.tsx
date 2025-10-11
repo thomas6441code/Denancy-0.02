@@ -83,7 +83,7 @@ export default function Dashboard({ messages, stats, chartData, subjectDistribut
                     <StatCard
                         title="Total Messages"
                         value={stats.totalMessages}
-                        icon={<MessageIcon />}
+                        icon={<MessageIcon className='text-blue-500 bg-blue-100 p-2' />}
                         trend={stats.messagesTrend > 0 ? "up" : "down"}
                         percentage={`${Math.abs(stats.messagesTrend)}%`}
                         color="blue"
@@ -91,7 +91,7 @@ export default function Dashboard({ messages, stats, chartData, subjectDistribut
                     <StatCard
                         title="Unread Messages"
                         value={stats.unreadMessages}
-                        icon={<MailWarningIcon />}
+                        icon={<MailWarningIcon className='text-orange-500 bg-amber-100 p-2' />}
                         trend="down"
                         percentage="8.3%"
                         color="orange"
@@ -99,7 +99,7 @@ export default function Dashboard({ messages, stats, chartData, subjectDistribut
                     <StatCard
                         title="Response Rate"
                         value={stats.responseRate}
-                        icon={<TrendingUpIcon />}
+                        icon={<TrendingUpIcon className='text-green-500 bg-green-100 p-2' />}
                         trend="up"
                         percentage="5.2%"
                         color="green"
@@ -108,7 +108,7 @@ export default function Dashboard({ messages, stats, chartData, subjectDistribut
                     <StatCard
                         title="Avg. Response Time"
                         value={2.4}
-                        icon={<ClockIcon />}
+                        icon={<ClockIcon className='text-purple-500 bg-purple-100 p-2' />}
                         trend="down"
                         percentage="12.1%"
                         color="purple"
@@ -182,7 +182,7 @@ export default function Dashboard({ messages, stats, chartData, subjectDistribut
                             </span>
                         </div>
                     </div>
-                    <div className="overflow-x-auto">
+                    <div className="overflow-x-auto hide-scrollbar">
                         <table className="w-full">
                             <thead>
                                 <tr className="bg-gray-50 border-b border-gray-200">
@@ -228,7 +228,7 @@ export default function Dashboard({ messages, stats, chartData, subjectDistribut
 // Message Table Row Component
 function MessageTableRow({ message }: { message: Message }) {
     return (
-        <tr className="hover:bg-gray-50 transition-colors duration-150">
+        <tr className="hover:bg-gray-50 transition-colors duration-150 hide-scrollbar">
             <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center">
                     <div className={`w-3 h-3 rounded-full mr-2 ${

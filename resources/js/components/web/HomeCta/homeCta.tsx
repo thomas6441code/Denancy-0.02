@@ -55,7 +55,7 @@ const DynamicElevateSection: React.FC<ElevateSectionProps> = ({
     ]
 }) => {
     return (
-        <section className="bg-gradient-to-r from-blue-800 to-blue-900 text-white py-10 px-4">
+        <section className="bg-gradient-to-r from-blue-800 to-blue-900 text-white py-10 px-4 md:px-14">
             <div className="min-w-full text-center">
                 {/* Main Heading */}
                 <h2 className="text-3xl font-serif italic md:text-[2.7rem] font-bold mb-6 leading-tight">

@@ -67,7 +67,7 @@ const TeamsAdmin: FC = () => {
 
     const fetchTeams = async () => {
         try {
-            const response = await fetch('/admin/teams');
+            const response = await fetch('/api/teams');
             if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.json();
             setTeams(data);
@@ -368,7 +368,7 @@ const TeamsAdmin: FC = () => {
                                                 className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
                                             />
                                             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                                            <div className="absolute top-4 right-4 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                            <div className="absolute top-4 right-4 flex space-x-2 md:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                                 <button
                                                     onClick={() => handleEdit(member)}
                                                     className="p-2 bg-white/90 backdrop-blur-sm rounded-lg text-blue-600 hover:text-blue-800 hover:bg-white transition-colors duration-200 shadow-lg"

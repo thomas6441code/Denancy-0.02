@@ -1,4 +1,6 @@
-const IntroductionSection = () => {
+import { Service } from "@/pages/admin/services/Index";
+
+const IntroductionSection = ({ image }: { image: Service }) => {
     return (
         <section className="md:py-16 md:pt-0 pt-10 max-w-7xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -25,7 +27,7 @@ const IntroductionSection = () => {
                     {/* 4:3 Aspect Ratio */}
                     <div className="aspect-[4/3] bg-gray-100 border border-gray-200">
                         <img
-                            src="/images/slides/home.jpg"
+                            src={image.image}
                             alt="Denancy Legends Group Team"
                             className="w-full h-full object-cover"
                         />

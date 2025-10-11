@@ -26,7 +26,7 @@ const TestimonialSection = ({ testimonials }: { testimonials: Testimonial[] }) =
         {/* Continuous Slider */}
         <div className="relative w-full md:w-[90%] mx-auto overflow-hidden">
           <div className="flex animate-scroll-slow">
-            {loopTestimonials.map((testimonial, index) => (
+            {loopTestimonials?.map((testimonial, index) => (
               <div
                 key={index}
                 className="w-full md:w-1/2 flex-shrink-0 p-4"
@@ -39,7 +39,7 @@ const TestimonialSection = ({ testimonials }: { testimonials: Testimonial[] }) =
 
                   {/* Content */}
                   <p className="text-gray-800 text-sm mb-4 italic line-clamp-4">
-                    "{testimonial.content}"
+                    "{testimonial?.content}"
                   </p>
 
                   {/* Rating */}
@@ -47,7 +47,7 @@ const TestimonialSection = ({ testimonials }: { testimonials: Testimonial[] }) =
                     {[...Array(5)].map((_, i) => (
                       <svg
                         key={i}
-                        className={`w-4 h-4 ${i < testimonial.rating ? "text-yellow-400" : "text-gray-300"}`}
+                        className={`w-4 h-4 ${i < testimonial?.rating ? "text-yellow-400" : "text-gray-300"}`}
                         fill="currentColor"
                         viewBox="0 0 20 20"
                       >
@@ -71,13 +71,13 @@ const TestimonialSection = ({ testimonials }: { testimonials: Testimonial[] }) =
                   {/* Author */}
                   <div className="flex items-center space-x-3">
                     <img
-                      src={testimonial.image}
-                      alt={testimonial.name}
+                      src={testimonial?.image}
+                      alt={testimonial?.name}
                       className="w-10 h-10 rounded-full object-cover"
                     />
                     <div>
-                      <h4 className="font-semibold text-gray-900 text-sm">{testimonial.name}</h4>
-                      <p className="text-gray-600 text-xs">{testimonial.role}</p>
+                      <h4 className="font-semibold text-gray-900 text-sm">{testimonial?.name}</h4>
+                      <p className="text-gray-600 text-xs">{testimonial?.role}</p>
                     </div>
                   </div>
                 </div>

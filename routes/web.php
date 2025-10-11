@@ -61,7 +61,6 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
     Route::delete('/faqs/{faq}', [FaqController::class, 'destroy'])->name('admin.faqs.destroy');
 
     Route::get('/teams', [MemberController::class, 'index'])->name('admin.teams.teamsAdmin');
-    Route::get('/teams', [MemberController::class, 'indexteams']);
     Route::post('/teams', [MemberController::class, 'store']);
     Route::put('/teams/{member}', [MemberController::class, 'update']);
     Route::delete('/teams/{member}', [MemberController::class, 'destroy']);
@@ -84,6 +83,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->group(function () {
 
 Route::middleware(['verified', 'auth'])->group(function () {
     Route::get('dashboard', [DashBoardController::class, 'index'])->name('dashboard');
+
+    Route::get('/api/teams', [MemberController::class, 'indexteams']);
 
     Route::get('/api/admin/contacts', [ContactusController::class, 'getall'])->name('api.contacts');
     Route::put('/api/admin/contacts/read/{contact}', [ContactusController::class, 'markAsRead'])->name('api.read.contacts');

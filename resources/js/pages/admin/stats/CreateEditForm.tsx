@@ -3,6 +3,7 @@ import { useForm } from '@inertiajs/react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { TextInput } from '@/components/Form/TextInput';
+import IconComponent from '@/components/web/shared/IconComponent';
 
 interface StatProps {
     stat?: {
@@ -69,7 +70,10 @@ const StatForm: React.FC<StatProps> = ({ stat }) => {
                                 <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
                                     <span className="text-sm text-gray-600">Preview:</span>
                                     <div className="flex items-center space-x-2">
-                                        <span className="text-lg">{data.icon}</span>
+                                          <IconComponent
+                                                icon={data.icon}
+                                                className="h-6 w-6 text-blue-600 dark:text-blue-400"
+                                            />
                                         <span className="text-xs text-gray-500">(icon will be rendered here)</span>
                                     </div>
                                 </div>

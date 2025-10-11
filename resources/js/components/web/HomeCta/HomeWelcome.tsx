@@ -1,4 +1,6 @@
-const AboutSection = () => {
+import { ImageItem } from "@/pages/web/home";
+
+const AboutSection = ({image}:{image:ImageItem}) => {
     return (
         <section className="py-20 md:mt-0 mt-[70vh]">
             <div className="max-w-6xl mx-auto">
@@ -47,7 +49,7 @@ const AboutSection = () => {
                         {/* 4:3 Aspect Ratio */}
                         <div className="aspect-[4/3] bg-gray-100 border border-gray-200">
                             <img
-                                src="/images/slides/home.jpg"
+                                src={image?.url}
                                 alt="Denancy Legends Group Team"
                                 className="w-full h-full object-cover"
                             />
